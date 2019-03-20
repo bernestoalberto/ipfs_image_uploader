@@ -56,7 +56,7 @@ class App extends Component {
     this.state.web3.eth.getAccounts((error, accounts) => {
       simpleStorage.deployed().then((instance) => {
         this.simpleStorageInstance = instance
-        this.setState({ account: accounts[0] })
+        this.setState({ account: accounts[6] })
         // Get the value from the contract to prove it worked.
         return this.simpleStorageInstance.get.call(accounts[0])
       }).then((ipfsHash) => {
@@ -79,6 +79,7 @@ class App extends Component {
 
   onSubmit(event) {
     event.preventDefault()
+    //ipfs.add(this.state.buffer, (error, result) => {
     ipfs.files.add(this.state.buffer, (error, result) => {
       if(error) {
         console.error(error)
