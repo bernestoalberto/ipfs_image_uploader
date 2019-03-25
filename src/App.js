@@ -62,7 +62,7 @@ class App extends Component {
       }).then((ipfsHash) => {
         // Update state with the result.
         return this.setState({ ipfsHash })
-      })
+      }) 
     })
   }
 
