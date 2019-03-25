@@ -54,6 +54,7 @@
     "ipfs-http-client": "^30.1.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "truffle": "^5.0.9",
     "truffle-hdwallet-provider": "^1.0.5"
   },
   "scripts": {

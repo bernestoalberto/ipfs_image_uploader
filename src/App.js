@@ -56,7 +56,7 @@ class App extends Component {
     this.state.web3.eth.getAccounts((error, accounts) => {
       simpleStorage.deployed().then((instance) => {
         this.simpleStorageInstance = instance
-        this.setState({ account: accounts[6] })
+        this.setState({ account: accounts[0] })
         // Get the value from the contract to prove it worked.
         return this.simpleStorageInstance.get.call(accounts[0])
       }).then((ipfsHash) => {
@@ -85,9 +85,12 @@ class App extends Component {
         console.error(error)
         return
       }
+      console.log( `The hash is ${result[0].hash}`);
+      console.log( `The Contract # is ${ this.simpleStorageInstance.address}`);
       this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
+        console.log('ifpsHash', this.state.ipfsHash);
         return this.setState({ ipfsHash: result[0].hash })
-        console.log('ifpsHash', this.state.ipfsHash)
+    
       })
     })
   }
