@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-import getWeb3 from './utils/getWeb3'
-import ipfs from './ipfs'
+import React, { Component } from 'react';
+import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
+import getWeb3 from './utils/getWeb3';
+import ipfs from './ipfs';
+
 
 import './css/oswald.css'
 import './css/open-sans.css'
@@ -16,6 +17,7 @@ class App extends Component {
       ipfsHash: '',
       web3: null,
       buffer: null,
+      filename:null,
       account: null
     }
     this.captureFile = this.captureFile.bind(this);
@@ -68,10 +70,13 @@ class App extends Component {
 
   captureFile(event) {
     event.preventDefault()
-    const file = event.target.files[0]
-    const reader = new window.FileReader()
+    const file = event.target.files[0];
+    this.setState({filename: file.name });
+    const reader = new window.FileReader();
+      
     reader.readAsArrayBuffer(file)
     reader.onloadend = () => {
+   
       this.setState({ buffer: Buffer(reader.result) })
       console.log('buffer', this.state.buffer)
     }
@@ -86,7 +91,11 @@ class App extends Component {
         return
       }
       console.log( `The hash is ${result[0].hash}`);
-      console.log( `The Contract # is ${ this.simpleStorageInstance.address}`);
+      let date = new Date();
+  
+   //   let txtfile = './logs/logs.txt';
+     console.log(`The hash is ${result[0].hash} for the file ${this.state.filename} @ ${date.getFullYear}/ ${date.getDate}/${date.getDay} ${date.getTime}  \n`);
+     console.log( `The Contract # is ${ this.simpleStorageInstance.address}`);
       this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
         console.log('ifpsHash', this.state.ipfsHash);
         return this.setState({ ipfsHash: result[0].hash })
